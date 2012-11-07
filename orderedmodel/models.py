@@ -1,12 +1,9 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 
 
 class OrderedModelManager(models.Manager):
     def swap(self, obj1, obj2):
-        tmp, obj2.order = obj2.order, 0
-        obj2.save(swapping=True)
-        obj2.order, obj1.order = obj1.order, tmp
+        obj1.order, obj2.order = obj2.order, obj1.order
         obj1.save()
         obj2.save()
 
@@ -35,11 +32,9 @@ class OrderedModel(models.Model):
         abstract = True
         ordering = ['order']
 
-    def save(self, swapping=False, *args, **kwargs):
+    def save(self, *args, **kwargs):
         if not self.id:
             self.order = self.max_order() + 1
-        if self.order == 0 and not swapping:
-            raise ValidationError("Can't set 'order' to 0")
         super(OrderedModel, self).save(*args, **kwargs)
 
     @classmethod
