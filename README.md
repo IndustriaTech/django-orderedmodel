@@ -14,7 +14,7 @@ There are a few simple steps to follow to make your models orderable:
    Django project.
 3. Add `'orderedmodel'` to `INSTALLED_APPS` in your `settings.py`.
 8. Ensure that your project is [using `django.contrib.staticfiles`](https://docs.djangoproject.com/en/dev/howto/static-files/)
-   to serve static content (this is now required for compatibility with Django 1.4+).
+   to serve static content
 4. Derive your Model from `orderedmodel.OrderedModel`.
 5. Derive your ModelAdmin from `orderedmodel.OrderedModelAdmin`.
 6. Add `reorder` field to yout ModelAdmin's `list_display`.
@@ -64,7 +64,4 @@ and look into admin site you'll see something like this:
 Django versions
 ---------------
 
-Current version of `django-orderedmodel` requires *Django-1.4+*.
-
-See [branch `django-1.3`](https://github.com/kirelagin/django-orderedmodel/tree/django-1.3)
-for version compatible with *Django-1.3*.
+Current version of `django-orderedmodel` requires *Django-1.3+*.
