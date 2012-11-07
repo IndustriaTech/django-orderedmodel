@@ -16,6 +16,15 @@ class OrderedModelManager(models.Manager):
         except IndexError:
             return 0
 
+    def fix_ordering(self):
+        """
+        This method must be executed only if this application is
+        added to existing project.
+        """
+        for index, item in enumerate(self.only('order'), 1):
+            item.order = index
+            item.save()
+
 
 class OrderedModel(models.Model):
     order = models.PositiveIntegerField(blank=True, default=1, db_index=True)
