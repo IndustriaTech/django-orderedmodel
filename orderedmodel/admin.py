@@ -14,6 +14,11 @@ class OrderedModelAdmin(admin.ModelAdmin):
     ordering = ['order']
     exclude = ['order']
 
+    def __init__(self, model, admin_site):
+        super(OrderedModelAdmin, self).__init__(model, admin_site)
+        if 'reorder' not in self.list_display:
+            self.list_display = list(self.list_display) + ['reorder']
+
     def get_urls(self):
         my_urls = patterns('',
                 (r'^(?P<pk>\d+)/move_up/$', self.admin_site.admin_view(self.move_up)),
