@@ -44,3 +44,15 @@ class OrderedModel(models.Model):
     @classmethod
     def max_order(cls):
         return cls.objects.max_order()
+
+    def get_next_by_order(self):
+        try:
+            return self.__class__.objects.filter(order__gt=self.order).order_by('order')[0]
+        except IndexError:  # Last item
+            return
+
+    def get_previous_by_order(self):
+        try:
+            return self.__class__.objects.filter(order__lt=self.order).order_by('-order')[0]
+        except IndexError:  # First item
+            return

@@ -38,21 +38,15 @@ class OrderedModelAdmin(admin.ModelAdmin):
     def move_down(self, request, pk):
         if self.has_change_permission(request):
             item = get_object_or_404(self.model, pk=pk)
-            try:
-                next_item = self.model.objects.filter(order__gt=item.order).order_by('order')[0]
-            except IndexError:  # Last item
-                pass
-            else:
+            next_item = item.get_next_by_order()
+            if next_item:
                 self.model.objects.swap(item, next_item)
         return HttpResponseRedirect('../../')
 
     def move_up(self, request, pk):
         if self.has_change_permission(request):
             item = get_object_or_404(self.model, pk=pk)
-            try:
-                prev_item = self.model.objects.filter(order__lt=item.order).order_by('-order')[0]
-            except IndexError:  # First item
-                pass
-            else:
+            prev_item = item.get_previous_by_order()
+            if prev_item:
                 self.model.objects.swap(item, prev_item)
         return HttpResponseRedirect('../../')
