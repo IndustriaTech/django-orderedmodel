@@ -11,10 +11,7 @@ class OrderedModel(models.Model):
 
     def save(self, swapping=False, *args, **kwargs):
         if not self.id:
-            try:
-                self.order = self.max_order() + 1
-            except IndexError:
-                self.order = 1  # 0 is a special index used in swap
+            self.order = self.max_order() + 1
         if self.order == 0 and not swapping:
             raise ValidationError("Can't set 'order' to 0")
         super(OrderedModel, self).save(*args, **kwargs)
@@ -29,4 +26,7 @@ class OrderedModel(models.Model):
 
     @classmethod
     def max_order(cls):
-        return cls.objects.order_by('-order')[0].order
+        try:
+            return cls.objects.order_by('-order').values_list('order', flat=True)[0]
+        except IndexError:
+            return 0
