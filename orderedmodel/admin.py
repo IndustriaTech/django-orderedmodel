@@ -2,7 +2,10 @@
 
 from django.contrib import admin
 from django.conf import settings
-from django.conf.urls import patterns
+try:
+  from django.conf.urls import patterns
+except:
+  from django.conf.urls.defaults import patterns
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 
