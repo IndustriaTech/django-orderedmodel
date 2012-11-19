@@ -3,6 +3,12 @@ from django.db import models
 
 class OrderedModelManager(models.Manager):
     def swap(self, obj1, obj2):
+        """
+        Swap places in order of two objects.
+        If some of the objects is empty (mostly obj2) then do nothing
+        """
+        if not (obj1 and obj2):
+            return
         obj1.order, obj2.order = obj2.order, obj1.order
         obj1.save()
         obj2.save()
@@ -34,16 +40,14 @@ class OrderedModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.order = self.max_order() + 1
+            self.order = self.__class__.objects.max_order() + 1
         super(OrderedModel, self).save(*args, **kwargs)
 
-    @classmethod
-    def swap(cls, obj1, obj2):
-        cls.objects.swap(obj1, obj2)
+    def move_down(self):
+        self.__class__.objects.swap(self, self.get_next_by_order())
 
-    @classmethod
-    def max_order(cls):
-        return cls.objects.max_order()
+    def move_up(self):
+        self.__class__.objects.swap(self, self.get_previous_by_order())
 
     def get_next_by_order(self):
         try:
