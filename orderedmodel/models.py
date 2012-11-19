@@ -9,6 +9,9 @@ class OrderedModelManager(models.Manager):
         """
         if not (obj1 and obj2):
             return
+        if not (isinstance(obj1, self.model) and isinstance(obj2, self.model)):
+            raise TypeError("%r and %r must be instances of %r" %
+                            (obj1, obj2, self.model))
         obj1.order, obj2.order = obj2.order, obj1.order
         obj1.save()
         obj2.save()
