@@ -13,10 +13,10 @@ There are a few simple steps to follow to make your models orderable:
 
 1. Add django-ordered model to your enviroment
   * With [pip](http://www.pip-installer.org/en/latest/)
-    - `pip install git+git://github.com/MagicSolutions/django-orderedmodel.git`.
+     * `pip install git+git://github.com/MagicSolutions/django-orderedmodel.git`.
   * Without pip
-    - `git clone git://github.com/MagicSolutions/django-orderedmodel.git`.
-    - Copy (or, even better, symlink) `orderedmodel` directory to your
+     * `git clone git://github.com/MagicSolutions/django-orderedmodel.git`.
+     * Copy (or, even better, symlink) `orderedmodel` directory to your
       Django project.
 2. Add `'orderedmodel'` to `INSTALLED_APPS` in your `settings.py`.
 3. Ensure that your project is [using `django.contrib.staticfiles`](https://docs.djangoproject.com/en/dev/howto/static-files/)
