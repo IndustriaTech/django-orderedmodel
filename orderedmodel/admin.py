@@ -10,12 +10,10 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 
 
-class OrderedModelAdmin(admin.ModelAdmin):
-    ordering = ['order']
-    exclude = ['order']
+class BaseOrderedModelAdmin(admin.ModelAdmin):
 
     def __init__(self, model, admin_site):
-        super(OrderedModelAdmin, self).__init__(model, admin_site)
+        super(BaseOrderedModelAdmin, self).__init__(model, admin_site)
         if 'reorder' not in self.list_display:
             self.list_display = list(self.list_display) + ['reorder']
 
@@ -24,7 +22,7 @@ class OrderedModelAdmin(admin.ModelAdmin):
                 (r'^(?P<pk>\d+)/move_up/$', self.admin_site.admin_view(self.move_up)),
                 (r'^(?P<pk>\d+)/move_down/$', self.admin_site.admin_view(self.move_down)),
         )
-        return my_urls + super(OrderedModelAdmin, self).get_urls()
+        return my_urls + super(BaseOrderedModelAdmin, self).get_urls()
 
     def reorder(self, item):
         button = '<a href="{{0}}/move_{{1}}"><img src="{0}orderedmodel/arrow-{{1}}.gif" alt="{{1}}" /></a>'.format(settings.STATIC_URL)
@@ -38,15 +36,20 @@ class OrderedModelAdmin(admin.ModelAdmin):
     def move_down(self, request, pk):
         if self.has_change_permission(request):
             item = get_object_or_404(self.model, pk=pk)
-            next_item = item.get_next_by_order()
-            if next_item:
-                self.model.objects.swap(item, next_item)
+            item.move_down()
         return HttpResponseRedirect('../../')
 
     def move_up(self, request, pk):
         if self.has_change_permission(request):
             item = get_object_or_404(self.model, pk=pk)
-            prev_item = item.get_previous_by_order()
-            if prev_item:
-                self.model.objects.swap(item, prev_item)
+            item.move_up()
         return HttpResponseRedirect('../../')
+
+
+class OrderedModelAdmin(BaseOrderedModelAdmin):
+    ordering = ['order']
+    exclude = ['order']
+
+
+class OrderedMPTTModelAdmin(BaseOrderedModelAdmin):
+    pass
