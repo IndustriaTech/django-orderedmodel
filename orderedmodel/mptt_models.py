@@ -1,7 +1,7 @@
 from mptt.models import MPTTModel
 
 
-class OrderableMPTTModel(MPTTModel):
+class OrderedMPTTModel(MPTTModel):
 
     class Meta:
         abstract = True

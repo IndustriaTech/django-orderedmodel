@@ -75,5 +75,5 @@ Current version of `django-orderedmodel` requires *Django-1.3+*.
 Django-MPTT
 -----------
 
-Now there is a basic supoort of [django-mptt](http://django-mptt.github.com/django-mptt/). If you want to make simple reordering in admin and to use mptt for tree structure, you can use `orderedmodel.OrderableMPTTModel` and `orderedmodel.OrderedMPTTModelAdmin` instead of `orderedmodel.OrderedModel` and `orderedmodel.OrderedModelAdmin`
+Now there is a basic supoort of [django-mptt](http://django-mptt.github.com/django-mptt/). If you want to make simple reordering in admin and to use mptt for tree structure, you can use `orderedmodel.OrderedMPTTModel` and `orderedmodel.OrderedMPTTModelAdmin` instead of `orderedmodel.OrderedModel` and `orderedmodel.OrderedModelAdmin`
 

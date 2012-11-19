@@ -9,6 +9,6 @@ except ImportError:
     pass
 else:
     if 'mptt' in settings.INSTALLED_APPS:
-        from .mptt_models import OrderableMPTTModel
+        from .mptt_models import OrderedMPTTModel
         from .mptt_admin import OrderedMPTTModelAdmin
-        __all__ += ['OrderableMPTTModel', 'OrderedMPTTModelAdmin']
+        __all__ += ['OrderedMPTTModel', 'OrderedMPTTModelAdmin']
