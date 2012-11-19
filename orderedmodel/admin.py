@@ -49,7 +49,3 @@ class BaseOrderedModelAdmin(admin.ModelAdmin):
 class OrderedModelAdmin(BaseOrderedModelAdmin):
     ordering = ['order']
     exclude = ['order']
-
-
-class OrderedMPTTModelAdmin(BaseOrderedModelAdmin):
-    pass
