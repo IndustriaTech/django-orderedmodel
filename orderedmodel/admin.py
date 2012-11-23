@@ -49,3 +49,23 @@ class BaseOrderedModelAdmin(admin.ModelAdmin):
 class OrderedModelAdmin(BaseOrderedModelAdmin):
     ordering = ['order']
     exclude = ['order']
+
+
+class OrderedStackedInline(admin.StackedInline):
+    class Media:
+        js = (
+            "orderedmodel/jquery.init.js",
+            "cms/js/libs/jquery.ui.core.js",
+            "cms/js/libs/jquery.ui.sortable.js",
+            "orderedmodel/jquery.inlineordering.js",
+            )
+
+
+class OrderedTabularInline(admin.TabularInline):
+    class Media:
+        js = (
+            "orderedmodel/jquery.init.js",
+            "cms/js/libs/jquery.ui.core.js",
+            "cms/js/libs/jquery.ui.sortable.js",
+            "orderedmodel/jquery.inlineordering.js",
+            )
