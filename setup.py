@@ -10,7 +10,7 @@ README = read('README.md')
 
 setup(
     name="django-orderedmodel",
-    version="0.1.1",
+    version="0.1.2",
     url='http://github.com/MagicSolutions/django-orderedmodel',
     description="Intends to help you create models which can bemoved up\down (or left\right) with respect to each other.",
     long_description=README,
@@ -23,6 +23,7 @@ setup(
     package_data={
         'orderedmodel': [
             'static/orderedmodel/*.gif',
+            'static/orderedmodel/*.js',
         ],
     },
     classifiers=[
