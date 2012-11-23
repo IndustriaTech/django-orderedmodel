@@ -13,6 +13,18 @@ http://djangosnippets.org/snippets/1053/
                         $(this).find('input[id$=order]').val(i+1);
                     }
                 });
+            },
+
+            // Dirty hack for not loosing value of selects while mooving
+            start: function(evt, ui) {
+                ui.item.find('select').each(function(){
+                    $(this).data('value', $(this).val());
+                });
+            },
+            stop: function(evt, ui) {
+                ui.item.find('select').each(function(){
+                    $(this).val($(this).data('value'));
+                });
             }
         });
         $('div.inline-related h3').css('cursor', 'move');
