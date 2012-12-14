@@ -1,6 +1,13 @@
 from django.db import models
 
 
+def get_max_order(manager):
+    try:
+        return manager.order_by('-order').values_list('order', flat=True)[0]
+    except IndexError:
+        return 0
+
+
 class OrderedModelManager(models.Manager):
     def swap(self, obj1, obj2):
         """
@@ -17,10 +24,7 @@ class OrderedModelManager(models.Manager):
         obj2.save()
 
     def max_order(self):
-        try:
-            return self.order_by('-order').values_list('order', flat=True)[0]
-        except IndexError:
-            return 0
+        return get_max_order(self)
 
     def fix_ordering(self):
         """
@@ -43,14 +47,28 @@ class OrderedModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.order = self.__class__.objects.max_order() + 1
+            self.order = get_max_order(self.__class__.objects) + 1
         super(OrderedModel, self).save(*args, **kwargs)
 
     def move_down(self):
-        self.__class__.objects.swap(self, self.get_next_by_order())
+        self.swap(self.get_next_by_order())
 
     def move_up(self):
-        self.__class__.objects.swap(self, self.get_previous_by_order())
+        self.swap(self.get_previous_by_order())
+
+    def swap(self, obj):
+        """
+        Swap places in order of two objects.
+        If some of the objects is empty (mostly obj2) then do nothing
+        """
+        if not (obj):
+            return
+        if not (isinstance(obj, self.__class__)):
+            raise TypeError("%r must be instances of %r" %
+                            (obj, self.__class__))
+        self.order, obj.order = obj.order, self.order
+        self.save()
+        obj.save()
 
     def get_next_by_order(self):
         try:
