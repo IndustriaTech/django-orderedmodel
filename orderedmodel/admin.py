@@ -37,13 +37,19 @@ class BaseOrderedModelAdmin(admin.ModelAdmin):
         if self.has_change_permission(request):
             item = get_object_or_404(self.model, pk=pk)
             item.move_down()
-        return HttpResponseRedirect('../../')
+
+        return HttpResponseRedirect(
+            request.META.get('HTTP_REFERER') or '../../'
+        )
 
     def move_up(self, request, pk):
         if self.has_change_permission(request):
             item = get_object_or_404(self.model, pk=pk)
             item.move_up()
-        return HttpResponseRedirect('../../')
+        
+        return HttpResponseRedirect(
+            request.META.get('HTTP_REFERER') or '../../'
+        )
 
 
 class OrderedModelAdmin(BaseOrderedModelAdmin):
