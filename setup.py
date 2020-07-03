@@ -11,7 +11,7 @@ README = read('README.md')
 setup(
     name="django-orderedmodel",
     version="0.1.5",
-    url='http://github.com/MagicSolutions/django-orderedmodel',
+    url='http://github.com/IndustriaTech/django-orderedmodel',
     description="Intends to help you create models which can bemoved up\down (or left\right) with respect to each other.",
     long_description=README,
 
@@ -35,6 +35,6 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
     ],
     install_requires=[
-        'django>=1.3',
+        'django>=1.4',
     ],
 )
