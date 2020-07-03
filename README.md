@@ -13,16 +13,16 @@ There are a few simple steps to follow to make your models orderable:
 
 1. Add django-ordered model to your enviroment
   * With [pip](http://www.pip-installer.org/en/latest/)
-     * `pip install git+git://github.com/MagicSolutions/django-orderedmodel.git`.
+     * `pip install git+git://github.com/IndustriaTech/django-orderedmodel.git`.
   * Without pip
-     * `git clone git://github.com/MagicSolutions/django-orderedmodel.git`.
+     * `git clone git://github.com/IndustriaTech/django-orderedmodel.git`.
      * Copy (or, even better, symlink) `orderedmodel` directory to your
       Django project.
 2. Add `'orderedmodel'` to `INSTALLED_APPS` in your `settings.py`.
 3. Ensure that your project is [using `django.contrib.staticfiles`](https://docs.djangoproject.com/en/dev/howto/static-files/)
    to serve static content
-4. Derive your Model from `orderedmodel.OrderedModel`.
-5. Derive your ModelAdmin from `orderedmodel.OrderedModelAdmin`.
+4. Derive your Model from `orderedmodel.models.OrderedModel`.
+5. Derive your ModelAdmin from `orderedmodel.models.OrderedModelAdmin`.
 6. Enjoy!
 
 Now you can use `order_by('order')` in your query to get instances of your model
@@ -39,7 +39,7 @@ You need an orderable model `TestModel`.
 
 ```python
 from django.db import models
-from orderedmodel import OrderedModel
+from orderedmodel.models import OrderedModel
 
 class TestModel(OrderedModel):
   name = models.CharField(max_length=30)
@@ -49,7 +49,7 @@ class TestModel(OrderedModel):
 
 ```python
 from django.contrib import admin
-from orderedmodel import OrderedModelAdmin
+from orderedmodel.admin import OrderedModelAdmin
 
 from testapp.models import TestModel
 
@@ -69,11 +69,11 @@ and look into admin site you'll see something like this:
 Django versions
 ---------------
 
-Current version of `django-orderedmodel` requires *Django-1.3+*.
+Current version of `django-orderedmodel` requires *Django-1.4+*.
 
 
 Django-MPTT
 -----------
 
-Now there is a basic supoort of [django-mptt](http://django-mptt.github.com/django-mptt/). If you want to make simple reordering in admin and to use mptt for tree structure, you can use `orderedmodel.OrderedMPTTModel` and `orderedmodel.OrderedMPTTModelAdmin` instead of `orderedmodel.OrderedModel` and `orderedmodel.OrderedModelAdmin`
+Now there is a basic supoort of [django-mptt](http://django-mptt.github.com/django-mptt/). If you want to make simple reordering in admin and to use mptt for tree structure, you can use `orderedmodel.mptt_models.OrderedMPTTModel` and `orderedmodel.mptt_admin.OrderedMPTTModelAdmin` instead of `orderedmodel.models.OrderedModel` and `orderedmodel.admin.OrderedModelAdmin`
 
