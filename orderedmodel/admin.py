@@ -2,10 +2,7 @@
 
 from django.contrib import admin
 from django.conf import settings
-try:
-    from django.conf.urls import patterns
-except:
-    from django.conf.urls.defaults import patterns
+from django.conf.urls import url
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 
@@ -18,10 +15,10 @@ class BaseOrderedModelAdmin(admin.ModelAdmin):
             self.list_display = list(self.list_display) + ['reorder']
 
     def get_urls(self):
-        my_urls = patterns('',
-                (r'^(?P<pk>\d+)/move_up/$', self.admin_site.admin_view(self.move_up)),
-                (r'^(?P<pk>\d+)/move_down/$', self.admin_site.admin_view(self.move_down)),
-        )
+        my_urls = [
+                url(r'^(?P<pk>\d+)/move_up/$', self.admin_site.admin_view(self.move_up)),
+                url(r'^(?P<pk>\d+)/move_down/$', self.admin_site.admin_view(self.move_down)),
+        ]
         return my_urls + super(BaseOrderedModelAdmin, self).get_urls()
 
     def reorder(self, item):
